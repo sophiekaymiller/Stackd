@@ -1,0 +1,6 @@
+framework module FilestackSDK {
+  umbrella header "FilestackSDK-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Filestack
+import FilestackSDK
 import CoreData
 
 @UIApplicationMain
@@ -36,6 +38,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func applicationDidBecomeActive(_ application: UIApplication) {
 		// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+	}
+	
+	func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+		
+		if url.scheme == "com.sophieMiller.Stackd" && url.host == "Filestack" {
+			if #available(iOS 11.0, *) {
+				// NO-OP
+			} else {
+				NotificationCenter.default.post(name: Filestack.Client.resumeCloudRequestNotification,
+												object: url)
+			}
+			
+			return true
+		}
+		
+		// Here we just state that any other URLs should not be handled by this app.
+		return false
 	}
 
 	func applicationWillTerminate(_ application: UIApplication) {
